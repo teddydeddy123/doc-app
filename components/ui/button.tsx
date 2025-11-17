@@ -49,7 +49,7 @@ function Button({
   return (
     <Comp
       data-slot="button"
-      id='button'
+      id="button"
       className={`${buttonVariants({ variant, size })} ${className ?? ""}`.trim()}
       {...props}
     />

@@ -38,7 +38,10 @@ export default function Home() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button asChild className="w-full bg-sky-600 text-white hover:bg-sky-500">
+            <Button
+              asChild
+              className="w-full bg-sky-600 text-white hover:bg-sky-500"
+            >
               <Link href="/consultations">Access Consultations</Link>
             </Button>
           </CardContent>

@@ -2,13 +2,11 @@ import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 
 // This route seeds the database with initial dummy data
-// Only use this in development or for initial setup
 export async function POST() {
   try {
     const client = await clientPromise;
     const db = client.db("doc-app");
 
-    // Check if patients already exist
     const existingPatients = await db.collection("patients").countDocuments();
     if (existingPatients > 0) {
       return NextResponse.json(

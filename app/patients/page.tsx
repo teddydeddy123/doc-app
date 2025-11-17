@@ -16,15 +16,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Dialog,
-  DialogContent,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Pencil, Search, RefreshCw } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { ChevronDown, Search, RefreshCw } from "lucide-react";
 import Link from "next/link";
 
 // Patient type matching MongoDB structure
@@ -49,7 +45,6 @@ type Consultation = {
 };
 
 export default function PatientsPage() {
-  const router = useRouter();
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -66,7 +61,9 @@ export default function PatientsPage() {
     "all" | "active" | "ongoing" | "overdue" | "completed"
   >("all");
   const [lastVisitFilter, setLastVisitFilter] = useState<string>("");
-  const [expandedAvatarId, setExpandedAvatarId] = useState<string | number | null>(null);
+  const [expandedAvatarId, setExpandedAvatarId] = useState<
+    string | number | null
+  >(null);
 
   // Fetch patients from API
   const fetchPatients = async () => {
@@ -148,8 +145,6 @@ export default function PatientsPage() {
     setIsDialogOpen(true);
   };
 
-
-
   const handleSaveChanges = async () => {
     if (!selectedPatient) return;
 
@@ -206,20 +201,6 @@ export default function PatientsPage() {
     setIsEditing(false);
   };
 
-  // Helpers
-  // const formatShortDate = (iso?: string) => {
-  //   if (!iso) return "—";
-  //   try {
-  //     const d = new Date(iso);
-  //     const dd = String(d.getDate()).padStart(2, "0");
-  //     const mm = String(d.getMonth() + 1).padStart(2, "0");
-  //     const yyyy = d.getFullYear();
-  //     return `${dd}.${mm}.${yyyy}`;
-  //   } catch {
-  //     return "—";
-  //   }
-  // };
-
   const getInitials = (name: string) => {
     const parts = name.trim().split(/\s+/);
     const first = parts[0]?.[0] ?? "";
@@ -241,7 +222,11 @@ export default function PatientsPage() {
   };
 
   const shortId = (p: Patient) =>
-    p._id ? `PT-${p._id.slice(-4)}` : p.id ? `PT-${String(p.id).padStart(4, "0")}` : "PT—";
+    p._id
+      ? `PT-${p._id.slice(-4)}`
+      : p.id
+        ? `PT-${String(p.id).padStart(4, "0")}`
+        : "PT—";
 
   const statusBadgeClasses = (status?: Patient["status"]) => {
     switch (status) {
@@ -258,7 +243,6 @@ export default function PatientsPage() {
     }
   };
 
-  // Filter patients based on search, status and last visit
   const filteredPatients = patients.filter((patient) => {
     const matchesSearch = patient.name
       .toLowerCase()
@@ -269,7 +253,9 @@ export default function PatientsPage() {
       ? (() => {
           try {
             const selected = new Date(lastVisitFilter).getTime();
-            const lv = patient.lastVisit ? new Date(patient.lastVisit).getTime() : 0;
+            const lv = patient.lastVisit
+              ? new Date(patient.lastVisit).getTime()
+              : 0;
             return lv >= selected;
           } catch {
             return true;
@@ -282,7 +268,6 @@ export default function PatientsPage() {
   return (
     <div className="space-y-6">
       <div className="rounded-3xl border border-white/70 bg-white/80 p-6 pt-0  backdrop-blur">
-       
         <h1 className="text-3xl font-bold tracking-tight text-sky-600">
           Patients
         </h1>
@@ -293,9 +278,12 @@ export default function PatientsPage() {
 
       {/* Stats Widgets */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-6">
-        <Card 
+        <Card
           className="border border-white/60 backdrop-blur-xl shadow-lg overflow-hidden"
-          style={{ background: 'linear-gradient(301deg, rgb(74 149 255 / 26%), rgb(22 93 252 / 0%))' }}
+          style={{
+            background:
+              "linear-gradient(301deg, rgb(74 149 255 / 26%), rgb(22 93 252 / 0%))",
+          }}
         >
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
@@ -318,9 +306,12 @@ export default function PatientsPage() {
           </CardContent>
         </Card>
 
-        <Card 
+        <Card
           className="border border-white/60 backdrop-blur-xl shadow-lg overflow-hidden"
-          style={{ background: 'linear-gradient(301deg, rgb(74 149 255 / 26%), rgb(22 93 252 / 0%))' }}
+          style={{
+            background:
+              "linear-gradient(301deg, rgb(74 149 255 / 26%), rgb(22 93 252 / 0%))",
+          }}
         >
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
@@ -343,7 +334,7 @@ export default function PatientsPage() {
           </CardContent>
         </Card>
       </div>
-      
+
       <Card className="border border-white/70 bg-white/80 shadow-lg shadow-sky-100/40 backdrop-blur">
         <CardHeader className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <Button className="h-9 rounded-xl bg-[#155dfc] hover:bg-[#0e46c7] text-white">
@@ -440,7 +431,8 @@ export default function PatientsPage() {
                                 >
                                   {getInitials(patient.name)}
                                 </button>
-                                {expandedAvatarId === (patient._id || patient.id) && (
+                                {expandedAvatarId ===
+                                  (patient._id || patient.id) && (
                                   <div className="absolute left-9 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white p-2 shadow-lg ring-1 ring-slate-200">
                                     <div
                                       className={`flex size-25 items-center justify-center rounded-full text-lg font-semibold ${colorForName(
@@ -466,7 +458,7 @@ export default function PatientsPage() {
                             {patient.age} years
                           </TableCell>
                           <TableCell className="text-slate-600">
-                            {(patient.lastVisit)}
+                            {patient.lastVisit}
                           </TableCell>
                           <TableCell>
                             <span
@@ -514,11 +506,12 @@ export default function PatientsPage() {
       </Card>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      + <DialogContent 
-        style={{ backgroundColor: "#eff6ff" }}
-
-className="max-w-5xl max-h-[90vh] overflow-y-auto border-0  backdrop-blur-xl shadow-2xl">
-                            <div className="flex items-start justify-between border-b border-teal-200/50 pb-4">
+        +{" "}
+        <DialogContent
+          style={{ backgroundColor: "#eff6ff" }}
+          className="max-w-5xl max-h-[90vh] overflow-y-auto border-0  backdrop-blur-xl shadow-2xl"
+        >
+          <div className="flex items-start justify-between border-b border-teal-200/50 pb-4">
             {selectedPatient && (
               <div
                 className={`flex size-20 items-center justify-center rounded-full text-2xl font-semibold ${colorForName(
@@ -528,7 +521,6 @@ className="max-w-5xl max-h-[90vh] overflow-y-auto border-0  backdrop-blur-xl sha
                 {getInitials(selectedPatient.name)}
               </div>
             )}
-            
           </div>
 
           {/* Two-Column Layout */}
@@ -573,10 +565,14 @@ className="max-w-5xl max-h-[90vh] overflow-y-auto border-0  backdrop-blur-xl sha
             <div className="space-y-4">
               <div className="flex items-center justify-between mb-3">
                 <div>
-                <h3 className="text-sm font-semibold uppercase tracking-wide text-sky-600">
-                  Consultation History
-                </h3>
-               {showConsultationHistory && <p className="text-xs text-slate-600 mt-1">Latest consultations</p>}
+                  <h3 className="text-sm font-semibold uppercase tracking-wide text-sky-600">
+                    Consultation History
+                  </h3>
+                  {showConsultationHistory && (
+                    <p className="text-xs text-slate-600 mt-1">
+                      Latest consultations
+                    </p>
+                  )}
                 </div>
                 <Button
                   variant="ghost"
@@ -622,24 +618,21 @@ className="max-w-5xl max-h-[90vh] overflow-y-auto border-0  backdrop-blur-xl sha
                             {consultation.notes}
                           </p>
                         </CardContent>
-
                       </Card>
                     ))
-                    
                   ) : (
                     <p className="text-sm text-slate-500 italic ">
                       No consultations registered for this patient.
                     </p>
                   )}
-                                          {consultations.length > 1 && (
-                                            <Link
-                                            href={`/patients/${selectedPatient?._id || selectedPatient?.id}`}
-                                              className="text-xs text-blue-600 mt-4 font-bold cursor-pointer hover:text-blue-700 hover:underline"
-                                            >
-                                              See all consultations
-                                            </Link>
-                                          )}
-
+                  {consultations.length > 1 && (
+                    <Link
+                      href={`/patients/${selectedPatient?._id || selectedPatient?.id}`}
+                      className="text-xs text-blue-600 mt-4 font-bold cursor-pointer hover:text-blue-700 hover:underline"
+                    >
+                      See all consultations
+                    </Link>
+                  )}
                 </div>
               )}
             </div>
@@ -647,14 +640,14 @@ className="max-w-5xl max-h-[90vh] overflow-y-auto border-0  backdrop-blur-xl sha
 
           {/* Footer with Action Buttons */}
           {!isEditing && (
-               <Button
-               onClick={() =>setIsEditing(true)}
-               className="flex-1 text-white mt-6" 
-               disabled={saving}
-             >
+            <Button
+              onClick={() => setIsEditing(true)}
+              className="flex-1 text-white mt-6"
+              disabled={saving}
+            >
               Edit information
-              </Button>
-            )}
+            </Button>
+          )}
           {isEditing && (
             <div className="flex gap-3 border-t border-teal-200/50 mt-6">
               <Button

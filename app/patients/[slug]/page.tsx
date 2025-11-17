@@ -2,12 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Edit } from "lucide-react";
 
@@ -140,9 +135,7 @@ export default function PatientProfilePage() {
   }
 
   const birthYear = new Date().getFullYear() - patient.age;
-  const registrationDate = patient.createdAt
-    ? new Date(patient.createdAt)
-    : new Date();
+
 
   return (
     <div className="space-y-6 p-6">
@@ -230,136 +223,132 @@ export default function PatientProfilePage() {
               </div>
             </CardContent>
           </Card>
-
-       
         </div>
 
         {/* Right Column */}
-       
       </div>
-         {/* Visits Section */}
-         <Card className="shadow-sm w-full">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle>Visits</CardTitle>
-              </div>
-              <div className="flex gap-2 mt-4 border-b">
-                <button
-                  onClick={() => setActiveTab("future")}
-                  className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
-                    activeTab === "future"
-                      ? "border-blue-600 text-blue-600"
-                      : "border-transparent text-slate-600 hover:text-slate-900"
-                  }`}
-                >
-                  Future visits ({futureConsultations.length})
-                </button>
-                <button
-                  onClick={() => setActiveTab("past")}
-                  className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
-                    activeTab === "past"
-                      ? "border-blue-600 text-blue-600"
-                      : "border-transparent text-slate-600 hover:text-slate-900"
-                  }`}
-                >
-                  Past visits ({pastConsultations.length})
-                </button>
-                <button
-                  onClick={() => setActiveTab("planned")}
-                  className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
-                    activeTab === "planned"
-                      ? "border-blue-600 text-blue-600"
-                      : "border-transparent text-slate-600 hover:text-slate-900"
-                  }`}
-                >
-                  Planned treatments (0)
-                </button>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {activeTab === "future" &&
-                  (futureConsultations.length > 0 ? (
-                    futureConsultations.map((consultation) => (
-                      <div
-                        key={consultation._id}
-                        className="flex items-start justify-between p-4 border border-slate-200 rounded-lg"
-                      >
-                        <div className="space-y-1">
-                          <div className="flex items-center gap-3">
-                            <span className="text-sm font-medium text-slate-900">
-                              11.00-12.30
-                            </span>
-                            <span className="text-sm text-slate-600">
-                              {formatDate(consultation.date)}
-                            </span>
-                          </div>
-                          <p className="font-medium text-slate-900">
-                            {consultation.diagnosis}
-                          </p>
-                          <p className="text-sm text-slate-600">
-                            Doctor: {consultation.doctor}
-                          </p>
-                        </div>
-                        <span className="px-3 py-1 text-xs font-medium rounded-full bg-purple-100 text-purple-700">
-                          Scheduled
+      {/* Visits Section */}
+      <Card className="shadow-sm w-full">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle>Visits</CardTitle>
+          </div>
+          <div className="flex gap-2 mt-4 border-b">
+            <button
+              onClick={() => setActiveTab("future")}
+              className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+                activeTab === "future"
+                  ? "border-blue-600 text-blue-600"
+                  : "border-transparent text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              Future visits ({futureConsultations.length})
+            </button>
+            <button
+              onClick={() => setActiveTab("past")}
+              className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+                activeTab === "past"
+                  ? "border-blue-600 text-blue-600"
+                  : "border-transparent text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              Past visits ({pastConsultations.length})
+            </button>
+            <button
+              onClick={() => setActiveTab("planned")}
+              className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+                activeTab === "planned"
+                  ? "border-blue-600 text-blue-600"
+                  : "border-transparent text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              Planned treatments (0)
+            </button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {activeTab === "future" &&
+              (futureConsultations.length > 0 ? (
+                futureConsultations.map((consultation) => (
+                  <div
+                    key={consultation._id}
+                    className="flex items-start justify-between p-4 border border-slate-200 rounded-lg"
+                  >
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm font-medium text-slate-900">
+                          11.00-12.30
+                        </span>
+                        <span className="text-sm text-slate-600">
+                          {formatDate(consultation.date)}
                         </span>
                       </div>
-                    ))
-                  ) : (
-                    <p className="text-sm text-slate-500 italic">
-                      No future visits scheduled
-                    </p>
-                  ))}
+                      <p className="font-medium text-slate-900">
+                        {consultation.diagnosis}
+                      </p>
+                      <p className="text-sm text-slate-600">
+                        Doctor: {consultation.doctor}
+                      </p>
+                    </div>
+                    <span className="px-3 py-1 text-xs font-medium rounded-full bg-purple-100 text-purple-700">
+                      Scheduled
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-slate-500 italic">
+                  No future visits scheduled
+                </p>
+              ))}
 
-                {activeTab === "past" &&
-                  (pastConsultations.length > 0 ? (
-                    pastConsultations.map((consultation) => (
-                      <div
-                        key={consultation._id}
-                        className="flex items-start justify-between p-4 border border-slate-200 rounded-lg"
-                      >
-                        <div className="space-y-1">
-                          <div className="flex items-center gap-3">
-                            <span className="text-sm font-medium text-slate-900">
-                              11.00-12.30
-                            </span>
-                            <span className="text-sm text-slate-600">
-                              {formatDate(consultation.date)}
-                            </span>
-                          </div>
-                          <p className="font-medium text-slate-900">
-                            {consultation.diagnosis}
-                          </p>
-                          <p className="text-sm text-slate-600">
-                            Doctor: {consultation.doctor}
-                          </p>
-                          {consultation.notes && (
-                            <p className="text-xs text-slate-500 mt-1">
-                              {consultation.notes}
-                            </p>
-                          )}
-                        </div>
-                        <span className="px-3 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700">
-                          Completed
+            {activeTab === "past" &&
+              (pastConsultations.length > 0 ? (
+                pastConsultations.map((consultation) => (
+                  <div
+                    key={consultation._id}
+                    className="flex items-start justify-between p-4 border border-slate-200 rounded-lg"
+                  >
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm font-medium text-slate-900">
+                          11.00-12.30
+                        </span>
+                        <span className="text-sm text-slate-600">
+                          {formatDate(consultation.date)}
                         </span>
                       </div>
-                    ))
-                  ) : (
-                    <p className="text-sm text-slate-500 italic">
-                      No past visits recorded
-                    </p>
-                  ))}
+                      <p className="font-medium text-slate-900">
+                        {consultation.diagnosis}
+                      </p>
+                      <p className="text-sm text-slate-600">
+                        Doctor: {consultation.doctor}
+                      </p>
+                      {consultation.notes && (
+                        <p className="text-xs text-slate-500 mt-1">
+                          {consultation.notes}
+                        </p>
+                      )}
+                    </div>
+                    <span className="px-3 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700">
+                      Completed
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-slate-500 italic">
+                  No past visits recorded
+                </p>
+              ))}
 
-                {activeTab === "planned" && (
-                  <p className="text-sm text-slate-500 italic">
-                    No planned treatments
-                  </p>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+            {activeTab === "planned" && (
+              <p className="text-sm text-slate-500 italic">
+                No planned treatments
+              </p>
+            )}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
-

@@ -35,7 +35,7 @@ export default function RootLayout({
       >
         <SidebarProvider>
           <AppSidebar />
-          <SidebarInset >
+          <SidebarInset>
             <header className="flex rounded-t-[1.75rem] h-16 shrink-0 items-center gap-2 border-b border-white/70 bg-white/60 px-4 backdrop-blur">
               <SidebarTrigger className="-ml-1" />
             </header>

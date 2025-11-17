@@ -18,9 +18,9 @@ export async function GET() {
             let: { pid: "$_idStr" },
             pipeline: [
               { $match: { $expr: { $eq: ["$patientId", "$$pid"] } } },
-              { $sort: { date: -1 } },         // latest first
-              { $limit: 1 },                    // only latest
-              { $project: { _id: 0, date: 1 } }
+              { $sort: { date: -1 } }, // latest first
+              { $limit: 1 }, // only latest
+              { $project: { _id: 0, date: 1 } },
             ],
             as: "latestConsultation",
           },
@@ -28,7 +28,10 @@ export async function GET() {
         {
           $addFields: {
             lastVisit: {
-              $ifNull: [{ $arrayElemAt: ["$latestConsultation.date", 0] }, null],
+              $ifNull: [
+                { $arrayElemAt: ["$latestConsultation.date", 0] },
+                null,
+              ],
             },
           },
         },
