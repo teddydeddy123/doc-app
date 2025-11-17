@@ -31,12 +31,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gradient-to-br from-sky-50 via-white to-cyan-100 text-slate-900`}
       >
         <SidebarProvider>
           <AppSidebar />
-          <SidebarInset>
-            <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+          <SidebarInset >
+            <header className="flex rounded-t-[1.75rem] h-16 shrink-0 items-center gap-2 border-b border-white/70 bg-white/60 px-4 backdrop-blur">
               <SidebarTrigger className="-ml-1" />
             </header>
             <div className="flex flex-1 flex-col gap-4 p-4">{children}</div>

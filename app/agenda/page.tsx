@@ -6,36 +6,36 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export default function ConsultationsPage() {
+export default function AgendaPage() {
   return (
     <div className="space-y-6">
       <div className="rounded-3xl border border-white/70 bg-white/80 p-6  backdrop-blur">
-        <p className="text-sm font-semibold uppercase tracking-wide text-sky-600">
-          Consultation workspace
+        <p className="text-sm font-semibold uppercase tracking-wide text-sky-500">
+          Clinical schedule
         </p>
         <h1 className="text-3xl font-bold tracking-tight text-slate-900">
-          Consultations
+          Schedule
         </h1>
         <p className="text-slate-600">
-          Plan, document, and follow up on every medical consultation.
+          Plan daily rounds, follow-ups, and reminders for your care team.
         </p>
       </div>
-      <Card className="border border-white/70 bg-white/85 shadow-lg shadow-sky-100/40 backdrop-blur">
-        <CardHeader className="space-y-2">
+      <Card className="border border-white/70 bg-white/80 shadow-lg shadow-sky-100/40 backdrop-blur">
+        <CardHeader>
           <CardTitle className="text-xl text-slate-900">
-            Consultation board
+            Appointment overview
           </CardTitle>
           <CardDescription className="text-slate-600">
-            List of upcoming and completed consultations
+            Calendar of upcoming appointments and tasks
           </CardDescription>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-slate-600">
-            Your consultations will appear here. Integrate your scheduling tools
-            or start logging visits as you go.
+            Connect your scheduling tool or add consultations to see them here.
           </p>
         </CardContent>
       </Card>
     </div>
   );
 }
+
