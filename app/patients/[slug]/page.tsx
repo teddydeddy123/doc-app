@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
+import axios from "axios";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Edit } from "lucide-react";
@@ -43,19 +44,12 @@ export default function PatientProfilePage() {
       try {
         setLoading(true);
         const [patientRes, consultationsRes] = await Promise.all([
-          fetch(`/api/patients/${slug}`),
-          fetch(`/api/patients/${slug}/consultations`),
+          axios.get(`/api/patients/${slug}`),
+          axios.get(`/api/patients/${slug}/consultations`),
         ]);
 
-        if (patientRes.ok) {
-          const patientData = await patientRes.json();
-          setPatient(patientData);
-        }
-
-        if (consultationsRes.ok) {
-          const consultationsData = await consultationsRes.json();
-          setConsultations(consultationsData);
-        }
+        setPatient(patientRes.data);
+        setConsultations(consultationsRes.data);
       } catch (error) {
         console.error("Error fetching patient data:", error);
       } finally {
@@ -102,7 +96,7 @@ export default function PatientProfilePage() {
     }
   };
 
-  // Separate consultations into past and future
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -136,7 +130,6 @@ export default function PatientProfilePage() {
 
   const birthYear = new Date().getFullYear() - patient.age;
 
-
   return (
     <div className="space-y-6 p-6">
       {/* Header */}
@@ -166,7 +159,6 @@ export default function PatientProfilePage() {
       <div className="flex gap-4">
         {/* Left Column */}
         <div className="space-y-6 w-1/2">
-          {/* Patient Information Card */}
           <Card className="shadow-sm">
             <CardHeader>
               <CardTitle>Patient Information</CardTitle>

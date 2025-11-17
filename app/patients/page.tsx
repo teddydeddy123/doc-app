@@ -23,7 +23,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, Search, RefreshCw } from "lucide-react";
 import Link from "next/link";
 
-// Patient type matching MongoDB structure
+
 type Patient = {
   _id?: string;
   id?: number;
@@ -55,7 +55,6 @@ export default function PatientsPage() {
   const [consultations, setConsultations] = useState<Consultation[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
   const [showConsultationHistory, setShowConsultationHistory] = useState(true);
   const [statusFilter, setStatusFilter] = useState<
     "all" | "active" | "ongoing" | "overdue" | "completed"
@@ -83,23 +82,7 @@ export default function PatientsPage() {
     }
   };
 
-  // Refetch patients (for refresh button)
-  const handleRefresh = async () => {
-    try {
-      setRefreshing(true);
-      const response = await fetch("/api/patients");
-      if (response.ok) {
-        const data = await response.json();
-        setPatients(data);
-      } else {
-        console.error("Failed to fetch patients");
-      }
-    } catch (error) {
-      console.error("Error fetching patients:", error);
-    } finally {
-      setRefreshing(false);
-    }
-  };
+ 
 
   useEffect(() => {
     fetchPatients();
@@ -343,13 +326,11 @@ export default function PatientsPage() {
           <Button
             variant="outline"
             size="icon"
-            onClick={handleRefresh}
-            disabled={refreshing}
+            onClick={fetchPatients}
             title="Refresh patients list"
             className="h-9 w-9 border-sky-200 bg-white text-sky-600 hover:bg-sky-50"
           >
             <RefreshCw
-              className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`}
             />
           </Button>
         </CardHeader>

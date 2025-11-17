@@ -7,7 +7,6 @@ export async function GET() {
     const client = await clientPromise;
     const db = client.db("doc-app");
 
-    // Aggregate patients with their latest consultation date as lastVisit
     const patients = await db
       .collection("patients")
       .aggregate([
@@ -39,7 +38,6 @@ export async function GET() {
       ])
       .toArray();
 
-    // Convert ObjectId to string for JSON serialization
     const serializedPatients = patients.map((patient) => ({
       ...patient,
       _id: patient._id.toString(),
